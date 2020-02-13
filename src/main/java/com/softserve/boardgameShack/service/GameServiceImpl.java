@@ -32,6 +32,11 @@ public class GameServiceImpl implements GameService{
     }
 
     @Override
+    public List<Game> getByCategory(Category category) {
+        return gameDao.getByCategory(category);
+    }
+
+    @Override
     public List<Game> getAll() {
         return gameDao.getAll();
     }

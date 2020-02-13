@@ -7,8 +7,6 @@
 </head>
 
 <body>
-    <myTags:toHompage/>
-    <myTags:login/>
     <h1>Wrong username or password</h1>
 </body>
 </html>

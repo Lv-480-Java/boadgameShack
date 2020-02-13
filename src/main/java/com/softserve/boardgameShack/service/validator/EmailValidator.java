@@ -16,9 +16,10 @@ public class EmailValidator {
         if (!emailMatcher.matches()) {
             throw new IllegalArgumentException("Email is not valid.");
         }
+        exists(email);
     }
 
-    public void exists(String email) throws IllegalArgumentException{
+    private void exists(String email) throws IllegalArgumentException{
         if (userDao.getByEmail(email) != null){
             throw new IllegalArgumentException("This mail is already registered. Please type another.");
         }

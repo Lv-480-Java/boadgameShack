@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-<myTags:toHompage/>
 <head>
     <title>Add new game</title>
 </head>
@@ -41,10 +40,14 @@
         <td><input type="text" name="publishingHouse"></td>
     </tr>
     <tr>
+        <td>Image URL:</td>
+        <td><input type="text" name="image"></td>
+    </tr>
+    <tr>
         <td>Categories:</td>
         <c:forEach var = "category" items = "${categories}">
             <td><input type="checkbox" name="categoryArray" value="${category.name}"></td>
-            <td>${category.name}</td><br>
+            <td>${category.name}</td>
         </c:forEach>
     </tr>
     <tr>

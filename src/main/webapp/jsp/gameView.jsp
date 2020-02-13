@@ -4,7 +4,6 @@
 
 <html>
 <myTags:gameSearch/>
-<myTags:toHompage/>
 <head>
     <title>${model.name}</title>
 </head>

@@ -4,7 +4,6 @@
 
 <html>
 <myTags:gameSearch/>
-<myTags:toHompage/>
 <head>
     <title>Game list</title>
 </head>
@@ -28,7 +27,7 @@
                         ${game.name}
                 </a>
             </td>
-            <td><img src="${game.image}" alt = "${game.name}"></td>
+            <td><img src="${game.image}" alt = "${game.name}" width="70" height="70"></td>
             <td>${game.price}</td>
             <td>${game.timeToPlay}</td>
             <td>${game.playerNumber}</td>

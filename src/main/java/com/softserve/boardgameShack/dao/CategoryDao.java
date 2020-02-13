@@ -13,9 +13,9 @@ public class CategoryDao implements GenericDao<Category> {
     private static final String GET_BY_NAME = "select * from categories where name = ?";
     private static final String GET_BY_ID = "select * from categories where id = ?";
     private static final String GET_ALL = "select * from categories";
-    private static final String ADD_CATEGORY = "insert into categories (name) values (?)";
-    private static final String UPDATE_CATEGORY = "update categories set name = ? where id = ?";
-    private static final String DELETE_CATEGOTY = "delete from categories where id = ?";
+    private static final String ADD_CATEGORY = "insert into categories (name, image) values (?, ?)";
+    private static final String UPDATE_CATEGORY = "update categories set name = ?, image = ? where id = ?";
+    private static final String DELETE_CATEGORY = "delete from categories where id = ?";
 
     public Category getByName(String name) {
         Category category = null;
@@ -29,6 +29,7 @@ public class CategoryDao implements GenericDao<Category> {
                 category = new Category();
                 category.setId(resultSet.getLong(1));
                 category.setName(resultSet.getString(2));
+                category.setImage(resultSet.getString(3));
             }
         }catch (SQLException e){
             logger.error("Issue with getting category" +
@@ -51,6 +52,7 @@ public class CategoryDao implements GenericDao<Category> {
                 category = new Category();
                 category.setId(Long.valueOf(resultSet.getString(1)));
                 category.setName(resultSet.getString(2));
+                category.setImage(resultSet.getString(3));
             }
         }catch (SQLException e) {
             logger.error("Issue with getting category from database");
@@ -72,6 +74,7 @@ public class CategoryDao implements GenericDao<Category> {
                 Category category = new Category();
                 category.setId(1);
                 category.setName(resultSet.getString(2));
+                category.setImage(resultSet.getString(3));
                 categories.add(category);
             }
         }catch (SQLException e){
@@ -87,6 +90,7 @@ public class CategoryDao implements GenericDao<Category> {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_CATEGORY)) {
             preparedStatement.setString(1, model.getName());
+            preparedStatement.setString(2, model.getImage());
             preparedStatement.execute();
         }catch (SQLException e){
             logger.error("Issue with adding new category" +
@@ -100,8 +104,10 @@ public class CategoryDao implements GenericDao<Category> {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CATEGORY)) {
 
-            preparedStatement.setLong(1, model.getId());
-            preparedStatement.setString(2, model.getName());
+            preparedStatement.setString(1, model.getName());
+            preparedStatement.setString(2, model.getImage());
+            preparedStatement.setLong(3, model.getId());
+
             preparedStatement.execute();
 
         } catch (SQLException e) {
@@ -114,7 +120,7 @@ public class CategoryDao implements GenericDao<Category> {
     @Override
     public void delete(Category model) {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGOTY)){
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CATEGORY)){
 
             preparedStatement.setLong(1, model.getId());
 

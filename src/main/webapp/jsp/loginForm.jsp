@@ -2,7 +2,6 @@
 <%@taglib prefix="myTags" tagdir="/WEB-INF/tags" %>
 
 <html>
-<myTags:toHompage/>
 <head>
     <title>Login</title>
 </head>

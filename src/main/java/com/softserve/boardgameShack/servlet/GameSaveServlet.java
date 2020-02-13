@@ -37,6 +37,7 @@ public class GameSaveServlet extends HttpServlet {
         game.setPlayerNumber(req.getParameter("playerNumber"));
         game.setDescription(req.getParameter("description"));
         game.setLanguage(req.getParameter("language"));
+        game.setImage(req.getParameter("image"));
         String publishingHouse = req.getParameter("publishingHouse");
         String[] categoryArray = req.getParameterValues("categoryArray");
         List <String> categoryNames = Arrays.asList(categoryArray);

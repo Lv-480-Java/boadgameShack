@@ -19,6 +19,9 @@ public class GameDao implements GenericDao <Game> {
     private static final String GET_BY_NAME = "select * from games where name = ?";
     private static final String GET_BY_NAME_WILDCARD = "select * from games where name like ?";
     private static final String GET_BY_ID = "select * from games where id = ?";
+    private static final String GET_BY_CATEGORY = "select g.id, g.name, g.price, g.time_to_play, g.player_number, " +
+            "g.rating, g.description, g.language, g.publishing_house_id, g.image from games g inner join " +
+            "games_categories gc on g.id = gc.game_id inner join categories c on gc.category_id = c.id where c.id = ?";
     private static final String GET_ALL = "select * from games";
     private static final String CREATE_GAME = "insert into games (name, price, time_to_play, player_number," +
             " rating, description, language, publishing_house_id, image) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -88,6 +91,26 @@ public class GameDao implements GenericDao <Game> {
         }
 
         return null;
+    }
+
+    public List<Game> getByCategory(Category category) {
+        List<Game> games = new ArrayList<>();
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_CATEGORY)){
+
+            preparedStatement.setLong(1, category.getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                games.add(convertToGame(resultSet));
+            }
+
+        }catch (SQLException e) {
+            logger.error("Issue with getting games from database");
+            e.printStackTrace();
+        }
+
+        return games;
     }
 
     @Override
