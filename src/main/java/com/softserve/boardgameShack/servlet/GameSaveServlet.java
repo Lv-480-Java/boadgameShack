@@ -2,7 +2,10 @@ package com.softserve.boardgameShack.servlet;
 
 import com.softserve.boardgameShack.entity.Category;
 import com.softserve.boardgameShack.entity.Game;
-import com.softserve.boardgameShack.service.*;
+import com.softserve.boardgameShack.service.CategoryService;
+import com.softserve.boardgameShack.service.CategoryServiceImpl;
+import com.softserve.boardgameShack.service.GameService;
+import com.softserve.boardgameShack.service.GameServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -40,7 +43,7 @@ public class GameSaveServlet extends HttpServlet {
         game.setImage(req.getParameter("image"));
         String publishingHouse = req.getParameter("publishingHouse");
         String[] categoryArray = req.getParameterValues("categoryArray");
-        List <String> categoryNames = Arrays.asList(categoryArray);
+        List<String> categoryNames = Arrays.asList(categoryArray);
 
         gameService.add(game, publishingHouse, categoryNames);
         resp.sendRedirect("/homepage");

@@ -1,18 +1,38 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@taglib prefix="myTags" tagdir="/WEB-INF/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>BoardgameShack</title>
+    <title>New category</title>
 </head>
-<body>
+<body style="text-align: center">
 <myTags:navPanel/>
-
-<myTags:categoriesCards/>
-
+<h1>New Category</h1>
+<form style="width: 500px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;" action="/admin/categorySave" method="post">
+    <div class="form-group row">
+        <label for="inputCategory3" class="col-sm-2 col-form-label">Category name</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" id="inputCategory3" placeholder="Category" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputImage3" class="col-sm-2 col-form-label">Image URL</label>
+        <div class="col-sm-10">
+            <input type="text" name="image" class="form-control" id="inputImage3" placeholder="URL" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</form>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

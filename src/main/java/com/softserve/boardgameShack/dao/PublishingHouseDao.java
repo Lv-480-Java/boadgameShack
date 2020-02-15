@@ -9,14 +9,13 @@ import java.util.List;
 
 public class PublishingHouseDao implements GenericDao<PublishingHouse> {
 
-    private static Logger logger = Logger.getLogger(PublishingHouseDao.class.getName());
-
     private static final String GET_BY_NAME = "select * from publishing_houses where name = ?";
     private static final String GET_BY_ID = "select * from publishing_houses where id = ?";
     private static final String GET_ALL = "select * from publishing_houses";
     private static final String ADD_PUBLISHING_HOUSE = "insert into publishing_houses (name) values (?)";
     private static final String UPDATE_PH = "update publishing_houses set name = ? where id = ?";
     private static final String DELETE_PH = "delete from publishing_houses where id = ?";
+    private static Logger logger = Logger.getLogger(PublishingHouseDao.class.getName());
 
     public List<PublishingHouse> getByName(String name) {
         List<PublishingHouse> publishingHouses = new ArrayList<>();
@@ -32,7 +31,7 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
                 house.setName(resultSet.getString(2));
                 publishingHouses.add(house);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
@@ -43,17 +42,17 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
     public PublishingHouse getById(long id) {
         PublishingHouse house = null;
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 house = new PublishingHouse();
                 house.setId(resultSet.getLong(1));
                 house.setName(resultSet.getString(2));
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
@@ -74,7 +73,7 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
                 house.setName(resultSet.getString(2));
                 publishingHouses.add(house);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
@@ -87,7 +86,7 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_PUBLISHING_HOUSE)) {
             preparedStatement.setString(1, model.getName());
             preparedStatement.execute();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with adding new publishing house to database");
             e.printStackTrace();
         }
@@ -111,13 +110,13 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
     @Override
     public void delete(PublishingHouse model) {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PH)){
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PH)) {
 
             preparedStatement.setLong(1, model.getId());
 
             preparedStatement.execute();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with deleting publishing house from database");
             e.printStackTrace();
         }

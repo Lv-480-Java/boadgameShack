@@ -22,7 +22,7 @@ public class UserAuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         HttpSession session = req.getSession(false);
 
-        if (session != null && session.getAttribute("user") != null){
+        if (session != null && session.getAttribute("user") != null) {
             chain.doFilter(servletRequest, servletResponse);
         }
         resp.sendRedirect("/loginForm");

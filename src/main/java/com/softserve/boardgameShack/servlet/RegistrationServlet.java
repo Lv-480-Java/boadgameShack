@@ -12,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/registration")
@@ -41,7 +40,7 @@ public class RegistrationServlet extends HttpServlet {
             userService.add(user, repeatPassword);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/homepage.jsp");
             requestDispatcher.forward(req, resp);
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             req.setAttribute("error-msg", e.getMessage());
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/registrationForm.jsp");
             requestDispatcher.forward(req, resp);

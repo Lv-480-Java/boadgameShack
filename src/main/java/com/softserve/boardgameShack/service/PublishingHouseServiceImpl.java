@@ -5,14 +5,14 @@ import com.softserve.boardgameShack.entity.PublishingHouse;
 
 import java.util.List;
 
-public class PublishingHouseServiceImpl implements PublishingHouseService{
+public class PublishingHouseServiceImpl implements PublishingHouseService {
 
     private PublishingHouseDao dao = new PublishingHouseDao();
 
     @Override
     public PublishingHouse getByName(String name) {
         List<PublishingHouse> publishingHouseList = dao.getByName(name);
-        if (publishingHouseList.size() == 0){
+        if (publishingHouseList.size() == 0) {
             throw new IllegalArgumentException("No publishing house with such name length");
         }
         return publishingHouseList.get(0);

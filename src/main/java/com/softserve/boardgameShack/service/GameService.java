@@ -17,9 +17,9 @@ public interface GameService {
 
     List<Game> getAll();
 
-    void add (Game model, String houseName, List<String> categoryNames);
+    void add(Game model, String houseName, List<String> categoryNames);
 
-    void update (Game model, String houseName, List<String> categoryNames);
+    void update(Game model, String houseName, List<String> categoryNames);
 
-    void delete (Game model);
+    void delete(Game model);
 }

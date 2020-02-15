@@ -27,15 +27,15 @@ public class CategoryViewServlet extends HttpServlet {
         Category category = categoryService.getByName(req.getParameter("name"));
         List<Game> games = gameService.getByCategory(category);
 
-        if (games.size() == 0){
+        if (games.size() == 0) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/homepage.jsp");
             requestDispatcher.forward(req, resp);
-        }else if ((games.size() == 1)) {
+        } else if ((games.size() == 1)) {
             Game view = games.get(0);
             req.setAttribute("model", view);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/gameView.jsp");
             requestDispatcher.forward(req, resp);
-        }else {
+        } else {
             req.setAttribute("games", games);
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/gameList.jsp");
             requestDispatcher.forward(req, resp);

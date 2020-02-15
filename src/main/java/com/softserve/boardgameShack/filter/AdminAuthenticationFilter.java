@@ -2,7 +2,6 @@ package com.softserve.boardgameShack.filter;
 
 import com.softserve.boardgameShack.entity.User;
 import com.softserve.boardgameShack.entity.UserRole;
-import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -25,12 +24,12 @@ public class AdminAuthenticationFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
         HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
         if (user == null || !(user.getUserRole() == (UserRole.ADMIN))) {
             resp.sendRedirect("/loginForm");
 //        } else if(user.getUserRole() == (UserRole.ADMIN)) {
-        }else {
+        } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
 //        }else {

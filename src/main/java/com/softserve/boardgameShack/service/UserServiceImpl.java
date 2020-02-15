@@ -21,6 +21,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getById(long id) {
+        return dao.getById(id);
+    }
+
+    @Override
     public List<User> getAll() {
         return dao.getAll();
     }
@@ -31,5 +36,10 @@ public class UserServiceImpl implements UserService {
         usernameValidator.validate(model.getName());
         emailValidator.validate(model.getEmail());
         dao.add(model);
+    }
+
+    @Override
+    public void delete(User user) {
+        dao.delete(user);
     }
 }

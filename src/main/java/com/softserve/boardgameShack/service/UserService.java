@@ -8,7 +8,11 @@ public interface UserService {
 
     List<User> getByName(String name);
 
+    User getById(long id);
+
     List<User> getAll();
 
-    void add (User model, String repeatPassword);
+    void add(User model, String repeatPassword);
+
+    void delete(User user);
 }

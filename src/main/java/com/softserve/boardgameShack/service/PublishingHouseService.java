@@ -10,5 +10,5 @@ public interface PublishingHouseService {
 
     List<PublishingHouse> getAll();
 
-    void add (PublishingHouse model);
+    void add(PublishingHouse model);
 }

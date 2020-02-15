@@ -10,7 +10,7 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryDao categoryDao = new CategoryDao();
 
     @Override
-    public Category getByName (String name){
+    public Category getByName(String name) {
         return categoryDao.getByName(name);
     }
 

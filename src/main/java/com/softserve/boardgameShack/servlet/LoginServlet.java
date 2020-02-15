@@ -27,13 +27,13 @@ public class LoginServlet extends HttpServlet {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        if (loginService.checkUserProperties(name, password)){
+        if (loginService.checkUserProperties(name, password)) {
             List<User> userList = userService.getByName(name);
             User user = userList.get(0);
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
             resp.sendRedirect("/homepage");
-        }else {
+        } else {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/invalidLogin.jsp");
             requestDispatcher.forward(req, resp);
         }

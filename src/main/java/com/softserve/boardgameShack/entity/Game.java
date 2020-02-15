@@ -14,8 +14,6 @@ public class Game {
 
     private String playerNumber;
 
-    private double rating;
-
     private String description;
 
     private String language;
@@ -26,7 +24,8 @@ public class Game {
 
     private String image;
 
-    public Game() {}
+    public Game() {
+    }
 
     public long getId() {
         return id;
@@ -66,14 +65,6 @@ public class Game {
 
     public void setPlayerNumber(String playerNumber) {
         this.playerNumber = playerNumber;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
     }
 
     public String getDescription() {
@@ -124,7 +115,6 @@ public class Game {
                 ", price=" + price +
                 ", timeToPlay='" + timeToPlay + '\'' +
                 ", playerNumber='" + playerNumber + '\'' +
-                ", rating=" + rating +
                 ", description='" + description + '\'' +
                 ", language='" + language + '\'' +
                 ", publishingHouse=" + publishingHouse +

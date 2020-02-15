@@ -10,8 +10,6 @@ import java.util.List;
 
 public class UserDao implements GenericDao<User> {
 
-    private static Logger logger = Logger.getLogger(UserDao.class.getName());
-
     private static final String GET_BY_NAME = "select * from users where name = ?";
     private static final String GET_BY_EMAIL = "select * from users where email = ?";
     private static final String GET_BY_ID = "select * from users where id = ?";
@@ -21,6 +19,7 @@ public class UserDao implements GenericDao<User> {
     private static final String UPDATE_USER = "update users set name = ?, password = ?, email = ?, " +
             "phone = ?, user_role = ? where id = ?";
     private static final String DELETE_USER = "delete from users where id = ?";
+    private static Logger logger = Logger.getLogger(UserDao.class.getName());
 
     public List<User> getByName(String name) {
         List<User> users = new ArrayList<>();
@@ -50,7 +49,7 @@ public class UserDao implements GenericDao<User> {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 user = new User();
                 user = convertToUser(resultSet);
             }
@@ -67,7 +66,7 @@ public class UserDao implements GenericDao<User> {
     public User getById(long id) {
         User user = new User();
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -75,7 +74,7 @@ public class UserDao implements GenericDao<User> {
 
             user = convertToUser(resultSet);
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error("Issue with getting user from database");
             e.printStackTrace();
         }
@@ -141,12 +140,12 @@ public class UserDao implements GenericDao<User> {
     @Override
     public void delete(User model) {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)){
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
 
             preparedStatement.setLong(1, model.getId());
             preparedStatement.execute();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with deleting user");
             e.printStackTrace();
         }
@@ -156,16 +155,13 @@ public class UserDao implements GenericDao<User> {
         preparedStatement.setString(1, model.getName());
         preparedStatement.setString(2, model.getPassword());
         preparedStatement.setString(3, model.getEmail());
-        if (model.getPhone().equals("")) {
-            preparedStatement.setString(4, null);
-        }else {
-            preparedStatement.setString(4, model.getPhone());
-        }
+        preparedStatement.setString(4, model.getPhone());
         preparedStatement.setString(5, model.getUserRole().name());
     }
 
     private User convertToUser(ResultSet resultSet) throws SQLException {
         User user = new User();
+        user.setId(resultSet.getLong(1));
         user.setName(resultSet.getString(2));
         user.setPassword(resultSet.getString(3));
         user.setEmail(resultSet.getString(4));

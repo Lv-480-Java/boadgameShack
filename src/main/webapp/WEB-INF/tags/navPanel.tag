@@ -5,6 +5,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/homepage">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/gameList">All games</a>
+            </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Categories
@@ -36,8 +39,8 @@
                 </c:if>
             </li>
         </ul>
-        <form action="gameSearch" method="get">
-            Find your game: <input type="text" name="name">
+        <form action="/gameSearch" method="get">
+            <input type="text" name="name" placeholder="Search">
             <input type="submit" value="Search">
         </form>
     </div>

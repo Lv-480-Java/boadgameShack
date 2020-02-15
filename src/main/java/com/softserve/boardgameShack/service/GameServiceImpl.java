@@ -9,7 +9,7 @@ import com.softserve.boardgameShack.entity.PublishingHouse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameServiceImpl implements GameService{
+public class GameServiceImpl implements GameService {
 
     private GameDao gameDao = new GameDao();
     private PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
@@ -60,7 +60,7 @@ public class GameServiceImpl implements GameService{
     }
 
     private void setPublishingHouseToGame(Game model, String houseName) {
-        if(houseName.equals("")){
+        if (houseName.equals("")) {
             return;
         }
         List<PublishingHouse> publishingHouseList = publishingHouseDao.getByName(houseName);

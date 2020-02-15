@@ -1,7 +1,6 @@
 package com.softserve.boardgameShack.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Order {
 

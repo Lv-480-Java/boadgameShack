@@ -10,17 +10,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDao implements GenericDao<Order>{
-
-    private static Logger logger = Logger.getLogger(OrderDao.class.getName());
-
-    private static GameDao gameDao = new GameDao();
-    private static UserDao userDao = new UserDao();
+public class OrderDao implements GenericDao<Order> {
 
     private static final String GET_BY_ID = "select * from orders where id = ?";
     private static final String GET_ALL = "select * from orders";
     private static final String ADD_ORDER = "insert into orders (datetime, order_details, game_id, user_id) " +
             "values (?, ?, ?, ?)";
+    private static Logger logger = Logger.getLogger(OrderDao.class.getName());
+    private static GameDao gameDao = new GameDao();
+    private static UserDao userDao = new UserDao();
 //    private static final String UPDATE_ORDER = "update orders set datetime = ?, order_details = ?, game_id = ?, " +
 //            "user_id = ? where id = ?";
 //    private static final String DELETE_ORDER = "delete from orders where id = ?";
@@ -29,16 +27,16 @@ public class OrderDao implements GenericDao<Order>{
     public Order getById(long id) {
         Order order = null;
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
 
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 order = convertToModel(resultSet);
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error("Issue with getting order from database");
             e.printStackTrace();
         }
@@ -57,7 +55,7 @@ public class OrderDao implements GenericDao<Order>{
             while (resultSet.next()) {
                 orders.add(convertToModel(resultSet));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with getting order from database");
             e.printStackTrace();
         }
@@ -70,7 +68,7 @@ public class OrderDao implements GenericDao<Order>{
              PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER)) {
             convertToStatement(model, preparedStatement);
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             logger.error("Issue with adding new order to database");
             e.printStackTrace();
         }
@@ -115,11 +113,11 @@ public class OrderDao implements GenericDao<Order>{
         order.setDateTime(resultSet.getObject(2, LocalDateTime.class));
         order.setOrderDetails(resultSet.getString(3));
         Game game = gameDao.getById(resultSet.getLong(4));
-        if (game != null){
+        if (game != null) {
             order.setGame(game);
         }
         User user = userDao.getById(resultSet.getLong(5));
-        if (user != null){
+        if (user != null) {
             order.setUser(user);
         }
         return order;
