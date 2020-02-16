@@ -11,14 +11,26 @@ import java.util.List;
 
 public class GameDao implements GenericDao<Game> {
 
-    private static final String GET_BY_NAME = "SELECT * FROM games WHERE name = ?";
-    private static final String GET_BY_NAME_WILDCARD = "SELECT * FROM games WHERE name like ?";
-    private static final String GET_BY_ID = "SELECT * FROM games WHERE id = ?";
-    private static final String GET_BY_CATEGORY = "SELECT g.id, g.name, g.price, g.time_to_play, g.player_number, " +
-            "g.description, g.language, g.publishing_house_id, g.image FROM games g JOIN " +
-            "games_categories gc ON g.id = gc.game_id JOIN categories c ON gc.category_id = c.id WHERE c.id = ?";
-    private static final String GET_BY_PUBLISHING_HOUSE = "SELECT * FROM games WHERE publishing_house_id = ?";
-    private static final String GET_ALL = "SELECT * FROM games";
+    private static final String SELECT_GAMES =
+            "SELECT g.id, g.name, g.price, g.time_to_play, g.player_number, " +
+                    "g.description, g.language, g.publishing_house_id, g.image, p.name " +
+                    "FROM games AS g " +
+                    "LEFT JOIN publishing_houses AS p ON g.publishing_house_id = p.id ";
+    private static final String BY_ID = "WHERE g.id = ? ";
+    private static final String BY_NAME = "WHERE g.name = ? ";
+    private static final String BY_NAME_WILDCARD = "WHERE g.name like ? ";
+    private static final String BY_PUBLISHING_HOUSE = "WHERE g.publishing_house_id = ? ";
+    private static final String BY_CATEGORY =
+            "JOIN games_categories gc ON g.id = gc.game_id " +
+                    "JOIN categories c ON gc.category_id = c.id " +
+                    "WHERE c.id = ? ";
+
+    private static final String SELECT_BY_NAME = SELECT_GAMES + BY_NAME;
+    private static final String SELECT_BY_NAME_WILDCARD = SELECT_GAMES + BY_NAME_WILDCARD;
+    private static final String SELECT_BY_ID = SELECT_GAMES + BY_ID;
+    private static final String SELECT_BY_CATEGORY = SELECT_GAMES + BY_CATEGORY;
+    private static final String SELECT_BY_PUBLISHING_HOUSE = SELECT_GAMES + BY_PUBLISHING_HOUSE;
+
     private static final String CREATE_GAME = "INSERT INTO games (name, price, time_to_play, player_number," +
             " description, language, publishing_house_id, image) values (?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_GAME = "UPDATE games set name = ?, price = ?, time_to_play = ?, " +
@@ -32,51 +44,11 @@ public class GameDao implements GenericDao<Game> {
     private final PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
     private final CategoryDao categoryDao = new CategoryDao();
 
-    public List<Game> getByName(final String name) {
-        final List<Game> games = new ArrayList<>();
-        try (final Connection connection = ConnectionFactory.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME)) {
-
-            preparedStatement.setString(1, name);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                games.add(convertToGame(resultSet));
-            }
-
-        } catch (final SQLException e) {
-            logger.error("Issue with getting games from database");
-            e.printStackTrace();
-        }
-
-        return games;
-    }
-
-    public List<Game> getByNameWildcard(final String name) {
-        final List<Game> games = new ArrayList<>();
-        try (final Connection connection = ConnectionFactory.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME_WILDCARD)) {
-
-            final String wildcard = "%" + name + "%";
-            preparedStatement.setString(1, wildcard);
-            final ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                games.add(convertToGame(resultSet));
-            }
-
-        } catch (final SQLException e) {
-            logger.error("Issue with getting games from database");
-            e.printStackTrace();
-        }
-
-        return games;
-    }
 
     @Override
     public Game getById(final long id) {
         try (final Connection connection = ConnectionFactory.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID)) {
 
             preparedStatement.setLong(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
@@ -94,12 +66,30 @@ public class GameDao implements GenericDao<Game> {
         return null;
     }
 
-    public List<Game> getByCategory(final Category category) {
+    public List<Game> getGamesByName(final String name) {
+        return getGamesByStringParameter(SELECT_BY_NAME, name);
+    }
+
+    public List<Game> getGamesByNameWildcard(final String name) {
+        final String wildcard = "%" + name + "%";
+        return getGamesByStringParameter(SELECT_BY_NAME_WILDCARD, wildcard);
+    }
+
+    public List<Game> getGamesByCategory(final Category category) {
+        return getGamesByLongParameter(SELECT_BY_CATEGORY, category.getId());
+    }
+
+    public List<Game> getGamesByPublishingHouse(final PublishingHouse ph) {
+        return getGamesByLongParameter(SELECT_BY_PUBLISHING_HOUSE, ph.getId());
+    }
+
+    private List<Game> getGamesByStringParameter(final String query, final String parameter) {
         final List<Game> games = new ArrayList<>();
         try (final Connection connection = ConnectionFactory.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_CATEGORY)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setLong(1, category.getId());
+
+            preparedStatement.setString(1, parameter);
             final ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -114,12 +104,12 @@ public class GameDao implements GenericDao<Game> {
         return games;
     }
 
-    public List<Game> getByPublishingHouse(final PublishingHouse ph) {
+    private List<Game> getGamesByLongParameter(final String query, final long parameter) {
         final List<Game> games = new ArrayList<>();
         try (final Connection connection = ConnectionFactory.getConnection();
-             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_PUBLISHING_HOUSE)) {
+             final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setLong(1, ph.getId());
+            preparedStatement.setLong(1, parameter);
             final ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -140,7 +130,7 @@ public class GameDao implements GenericDao<Game> {
         try (final Connection connection = ConnectionFactory.getConnection();
              final Statement statement = connection.createStatement()) {
 
-            final ResultSet resultSet = statement.executeQuery(GET_ALL);
+            final ResultSet resultSet = statement.executeQuery(SELECT_GAMES);
 
             while (resultSet.next()) {
                 games.add(convertToGame(resultSet));
@@ -162,7 +152,7 @@ public class GameDao implements GenericDao<Game> {
             convertToStatement(model, preparedStatement);
 
             preparedStatement.execute();
-            final Game game = getByName(model.getName()).get(0);
+            final Game game = getGamesByName(model.getName()).get(0);
             if (model.getCategories() != null && !model.getCategories().isEmpty()) {
                 for (final Category category : model.getCategories()) {
                     try (final PreparedStatement preparedStatement1 = connection.prepareStatement(SET_CATEGORIES)) {
@@ -226,17 +216,19 @@ public class GameDao implements GenericDao<Game> {
 
     private Game convertToGame(final ResultSet resultSet) throws SQLException {
         final Game game = new Game();
-        game.setId(resultSet.getLong(1));
-        game.setName(resultSet.getString(2));
-        game.setPrice(resultSet.getDouble(3));
-        game.setTimeToPlay(resultSet.getString(4));
-        game.setPlayerNumber(resultSet.getString(5));
-        game.setDescription(resultSet.getString(6));
-        game.setLanguage(resultSet.getString(7));
-        game.setImage(resultSet.getString(9));
-        final PublishingHouse house = publishingHouseDao.getById(resultSet.getLong(8));
-        if (house != null) {
-            game.setPublishingHouse(publishingHouseDao.getById(resultSet.getLong(8)));
+        game.setId(resultSet.getLong("g.id"));
+        game.setName(resultSet.getString("g.name"));
+        game.setPrice(resultSet.getDouble("g.price"));
+        game.setTimeToPlay(resultSet.getString("g.time_to_play"));
+        game.setPlayerNumber(resultSet.getString("g.player_number"));
+        game.setDescription(resultSet.getString("g.description"));
+        game.setLanguage(resultSet.getString("g.language"));
+        game.setImage(resultSet.getString("g.image"));
+        if ((resultSet.getLong("g.publishing_house_id") != 0)) {
+            final PublishingHouse house = new PublishingHouse();
+            house.setId(resultSet.getLong("g.publishing_house_id"));
+            house.setName(resultSet.getString("p.name"));
+            game.setPublishingHouse(house);
         }
         return game;
     }

@@ -10,6 +10,7 @@
 </head>
 
 <body style="text-align: center">
+<myTags:navPanel/>
 <h1>Registration</h1>
 
 <form style="width: 500px;
@@ -44,7 +45,7 @@
     <div class="form-group row">
         <label for="inputPhone3" class="col-sm-2 col-form-label">Phone number</label>
         <div class="col-sm-10">
-            <input type="tel" class="form-control" id="inputPhone3" placeholder="Phone">
+            <input type="tel" name="phone" class="form-control" id="inputPhone3" placeholder="Phone">
         </div>
     </div>
     <div class="form-group row">

@@ -10,18 +10,18 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private UserDao dao = new UserDao();
-    private EmailValidator emailValidator = new EmailValidator();
-    private PasswordValidator passwordValidator = new PasswordValidator();
-    private UsernameValidator usernameValidator = new UsernameValidator();
+    private final UserDao dao = new UserDao();
+    private final EmailValidator emailValidator = new EmailValidator();
+    private final PasswordValidator passwordValidator = new PasswordValidator();
+    private final UsernameValidator usernameValidator = new UsernameValidator();
 
     @Override
-    public List<User> getByName(String name) {
+    public List<User> getByName(final String name) {
         return dao.getByName(name);
     }
 
     @Override
-    public User getById(long id) {
+    public User getById(final long id) {
         return dao.getById(id);
     }
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User model, String repeatPassword) throws IllegalArgumentException {
+    public void add(final User model, final String repeatPassword) throws IllegalArgumentException {
         passwordValidator.validate(model.getPassword(), repeatPassword);
         usernameValidator.validate(model.getName());
         emailValidator.validate(model.getEmail());
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(final User user) {
         dao.delete(user);
     }
 }

@@ -5,10 +5,10 @@ import com.softserve.boardgameShack.dao.LoginDaoimpl;
 
 public class LoginServiceImpl implements LoginService {
 
-    private LoginDao loginDao = new LoginDaoimpl();
+    private final LoginDao loginDao = new LoginDaoimpl();
 
     @Override
-    public boolean checkUserProperties(String name, String password) {
+    public boolean checkUserProperties(final String name, final String password) {
         return loginDao.checkUserProperties(name, password);
     }
 }

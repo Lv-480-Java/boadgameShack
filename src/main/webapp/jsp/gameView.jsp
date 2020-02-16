@@ -5,7 +5,6 @@
 <html>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<myTags:gameSearch/>
 <head>
     <title>${model.name}</title>
 </head>
@@ -16,7 +15,7 @@
     ${model.name}
 </h1>
 <ul class="list-group">
-    <li class="list-group-item">Price: ${model.price}</li>
+    <li class="list-group-item">Loan price: ${model.price} UAH/day</li>
     <li class="list-group-item">Time to play: ${model.timeToPlay}</li>
     <li class="list-group-item">Number of players: ${model.playerNumber}</li>
     <li class="list-group-item">Language: ${model.language}</li>

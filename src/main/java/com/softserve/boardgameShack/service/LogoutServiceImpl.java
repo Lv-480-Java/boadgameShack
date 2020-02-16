@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 public class LogoutServiceImpl implements LogoutService {
 
     @Override
-    public void logout(HttpSession session) {
+    public void logout(final HttpSession session) {
         session.invalidate();
     }
 }

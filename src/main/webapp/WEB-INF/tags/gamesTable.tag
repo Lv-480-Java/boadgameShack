@@ -5,7 +5,7 @@
     <tr>
         <th>Game</th>
         <th>Image</th>
-        <th>Price</th>
+        <th>Loan price(UAH/day)</th>
         <th>Time to play</th>
         <th>Players</th>
         <th>Description</th>

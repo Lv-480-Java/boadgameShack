@@ -19,6 +19,9 @@
                 </div>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/aboutUs">About Us</a>
+            </li>
+            <li class="nav-item">
                 <c:if test="${sessionScope.user == null}">
                 <a class="nav-link" href="/loginForm">Login</a>
                 </c:if>

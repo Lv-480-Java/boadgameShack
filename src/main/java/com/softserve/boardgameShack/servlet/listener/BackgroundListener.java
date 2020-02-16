@@ -13,15 +13,15 @@ import java.util.List;
 public class BackgroundListener implements ServletContextListener {
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        CategoryDao categoryDao = new CategoryDao();
-        List<Category> categories = categoryDao.getAll();
-        ServletContext context = sce.getServletContext();
+    public void contextInitialized(final ServletContextEvent sce) {
+        final CategoryDao categoryDao = new CategoryDao();
+        final List<Category> categories = categoryDao.getAll();
+        final ServletContext context = sce.getServletContext();
         context.setAttribute("categories", categories);
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void contextDestroyed(final ServletContextEvent sce) {
 
     }
 }

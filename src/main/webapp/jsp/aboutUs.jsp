@@ -10,16 +10,18 @@
 </head>
 <body>
 <myTags:navPanel/>
-<div class="jumbotron">
-    <h1 class="display-4">Welcome to our Boardgame Shack</h1>
-    <p class="lead">The Boadrgame Shack Club is a unique place where you can spend your time with friends or family and play your favorite games in a cozy, casual atmosphere.</p>
-    <p class="lead">Or you can just take a game on loan.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="/aboutUs" role="button">More info</a>
-    </p>
-    <hr class="my-4">
-    <myTags:categoriesCards/>
-</div>
+<h2 style="text-align: center">Our prices:</h2>
+<ul class="list-group" style="width: 400px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;">
+    <li class="list-group-item">1 hour  - 20 UAH</li>
+    <li class="list-group-item">2 hours - 35 UAH</li>
+    <li class="list-group-item">3 hours - 50 UAH</li>
+    <li class="list-group-item">All day - 60 UAH</li>
+</ul>
+
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

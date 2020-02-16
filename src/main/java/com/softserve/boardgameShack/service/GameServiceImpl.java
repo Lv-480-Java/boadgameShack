@@ -17,12 +17,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> getByName(final String name) {
-        return gameDao.getByName(name);
+        return gameDao.getGamesByName(name);
     }
 
     @Override
     public List<Game> getByNameWildcard(final String name) {
-        return gameDao.getByNameWildcard(name);
+        return gameDao.getGamesByNameWildcard(name);
     }
 
     @Override
@@ -33,12 +33,12 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<Game> getByCategory(final Category category) {
-        return gameDao.getByCategory(category);
+        return gameDao.getGamesByCategory(category);
     }
 
     @Override
     public List<Game> getByPublishingHouse(final PublishingHouse publishingHouse) {
-        return gameDao.getByPublishingHouse(publishingHouse);
+        return gameDao.getGamesByPublishingHouse(publishingHouse);
     }
 
     @Override

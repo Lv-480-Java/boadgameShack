@@ -9,13 +9,13 @@ import java.util.List;
 
 public class PublishingHouseDao implements GenericDao<PublishingHouse> {
 
-    private static final String GET_BY_NAME = "select * from publishing_houses where name = ?";
-    private static final String GET_BY_ID = "select * from publishing_houses where id = ?";
-    private static final String GET_ALL = "select * from publishing_houses";
-    private static final String ADD_PUBLISHING_HOUSE = "insert into publishing_houses (name) values (?)";
-    private static final String UPDATE_PH = "update publishing_houses set name = ? where id = ?";
-    private static final String DELETE_PH = "delete from publishing_houses where id = ?";
-    private static final Logger logger = Logger.getLogger(PublishingHouseDao.class.getName());
+    private static final String GET_BY_NAME = "SELECT * FROM publishing_houses WHERE name = ?";
+    private static final String GET_BY_ID = "SELECT * FROM publishing_houses WHERE id = ?";
+    private static final String GET_ALL = "SELECT * FROM publishing_houses";
+    private static final String ADD_PUBLISHING_HOUSE = "INSERT INTO publishing_houses (name) VALUES (?)";
+    private static final String UPDATE_PH = "UPDATE publishing_houses SET name = ? WHERE id = ?";
+    private static final String DELETE_PH = "DELETE FROM publishing_houses WHERE id = ?";
+    private static final Logger LOGGER = Logger.getLogger(PublishingHouseDao.class.getName());
 
     public List<PublishingHouse> getByName(final String name) {
         final List<PublishingHouse> publishingHouses = new ArrayList<>();
@@ -26,10 +26,10 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
             final ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                publishingHouses.add(fromStatementToModel(resultSet));
+                publishingHouses.add(convertToPublishingHouse(resultSet));
             }
         } catch (final SQLException e) {
-            logger.error("Issue with getting publishing house from database");
+            LOGGER.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
         return publishingHouses;
@@ -37,24 +37,21 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
 
     @Override
     public PublishingHouse getById(final long id) {
-        PublishingHouse house = null;
         try (final Connection connection = ConnectionFactory.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
-
+            
             preparedStatement.setLong(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                house = new PublishingHouse();
-                house.setId(resultSet.getLong(1));
-                house.setName(resultSet.getString(2));
+                return convertToPublishingHouse(resultSet);
             }
 
         } catch (final SQLException e) {
-            logger.error("Issue with getting publishing house from database");
+            LOGGER.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
 
-        return house;
+        return null;
     }
 
     @Override
@@ -66,10 +63,10 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
             final ResultSet resultSet = statement.executeQuery(GET_ALL);
 
             while (resultSet.next()) {
-                publishingHouses.add(fromStatementToModel(resultSet));
+                publishingHouses.add(convertToPublishingHouse(resultSet));
             }
         } catch (final SQLException e) {
-            logger.error("Issue with getting publishing house from database");
+            LOGGER.error("Issue with getting publishing house from database");
             e.printStackTrace();
         }
         return publishingHouses;
@@ -82,7 +79,7 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
             preparedStatement.setString(1, model.getName());
             preparedStatement.execute();
         } catch (final SQLException e) {
-            logger.error("Issue with adding new publishing house to database");
+            LOGGER.error("Issue with adding new publishing house to database");
             e.printStackTrace();
         }
     }
@@ -97,7 +94,7 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
             preparedStatement.execute();
 
         } catch (final SQLException e) {
-            logger.error("Issue with updating publishing house");
+            LOGGER.error("Issue with updating publishing house");
             e.printStackTrace();
         }
     }
@@ -112,15 +109,15 @@ public class PublishingHouseDao implements GenericDao<PublishingHouse> {
             preparedStatement.execute();
 
         } catch (final SQLException e) {
-            logger.error("Issue with deleting publishing house from database");
+            LOGGER.error("Issue with deleting publishing house from database");
             e.printStackTrace();
         }
     }
 
-    private PublishingHouse fromStatementToModel(final ResultSet resultSet) throws SQLException {
+    private PublishingHouse convertToPublishingHouse(final ResultSet resultSet) throws SQLException {
         final PublishingHouse house = new PublishingHouse();
-        house.setId(resultSet.getLong(1));
-        house.setName(resultSet.getString(2));
+        house.setId(resultSet.getLong("id"));
+        house.setName(resultSet.getString("name"));
         return house;
     }
 }

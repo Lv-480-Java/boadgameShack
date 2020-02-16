@@ -7,11 +7,11 @@ import java.util.List;
 
 public class PublishingHouseServiceImpl implements PublishingHouseService {
 
-    private PublishingHouseDao dao = new PublishingHouseDao();
+    private final PublishingHouseDao dao = new PublishingHouseDao();
 
     @Override
-    public PublishingHouse getByName(String name) {
-        List<PublishingHouse> publishingHouseList = dao.getByName(name);
+    public PublishingHouse getByName(final String name) {
+        final List<PublishingHouse> publishingHouseList = dao.getByName(name);
         if (publishingHouseList.size() == 0) {
             throw new IllegalArgumentException("No publishing house with such name length");
         }
@@ -24,7 +24,7 @@ public class PublishingHouseServiceImpl implements PublishingHouseService {
     }
 
     @Override
-    public void add(PublishingHouse model) {
+    public void add(final PublishingHouse model) {
         dao.add(model);
     }
 }

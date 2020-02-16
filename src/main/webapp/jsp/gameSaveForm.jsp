@@ -9,74 +9,78 @@
     <title>Add new game</title>
 </head>
 
-<body>
+<body style="text-align: center">
+<myTags:navPanel/>
 <h1>Add game:</h1>
-<form action="/admin/gameSave" method="post">
-    <table>
-        <tr>
-            <td>Name:</td>
-            <td><input type="text" name="name" required></td>
-        </tr>
-        <tr>
-            <td>Price:</td>
-            <td><input type="number" name="price" min="0" required></td>
-        </tr>
-        <tr>
-            <td>Time to play:</td>
-            <td><input type="text" name="timeToPlay"></td>
-        </tr>
-        <tr>
-            <td>Number of players:</td>
-            <td><input type="text" name="playerNumber"></td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" name="description"></td>
-        </tr>
-        <tr>
-            <td>Language:</td>
-            <td><input type="text" name="language"></td>
-        </tr>
-        <tr>
-            <td>Publishing house:</td>
-            <td><input type="text" name="publishingHouse"></td>
-        </tr>
-        <tr>
-            <td>Image URL:</td>
-            <td><input type="text" name="image"></td>
-        </tr>
-        <tr>
-            <td>Categories:</td>
-            <%--<div class="form-check">--%>
-            <%--<c:forEach var="category" items="${categories}">--%>
-                <%--<input class="form-check-input" type="checkbox" value="" name="categoryArray"--%>
-                           <%--id="defaultCheck1">--%>
-                <%--<label class="form-check-label" for="defaultCheck1">--%>
-                        <%--${category.name}--%>
-                <%--</label>--%>
-            <%--</c:forEach>--%>
-            <%--</div>--%>
-            <c:forEach var = "category" items = "${categories}">
-            <td><input type="checkbox" name="categoryArray" value="${category.name}"></td>
-            <td>${category.name}</td>
+<form style="width: 600px;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;" action="/admin/gameSave" method="post">
+    <div class="form-group row">
+        <label for="inputName3" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" name="name" class="form-control" id="inputName3" placeholder="Name" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPrice3" class="col-sm-2 col-form-label">Loan price</label>
+        <div class="col-sm-10">
+            <input type="number" name="price" class="form-control" id="inputPrice3" placeholder="Price" required>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputTime3" class="col-sm-2 col-form-label">Time to play</label>
+        <div class="col-sm-10">
+            <input type="text" name="timeToPlay" class="form-control" id="inputTime3" placeholder="Time">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPlayers3" class="col-sm-2 col-form-label">Number of players</label>
+        <div class="col-sm-10">
+            <input type="text" name="playerNumber" class="form-control" id="inputPlayers3"
+                   placeholder="Number of players">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputDescription3" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <input type="text" name="description" class="form-control" id="inputDescription3" placeholder="Description">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputLanguage3" class="col-sm-2 col-form-label">Language</label>
+        <div class="col-sm-10">
+            <input type="text" name="language" class="form-control" id="inputLanguage3" placeholder="Language">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPH3" class="col-sm-2 col-form-label">Publishing house</label>
+        <div class="col-sm-10">
+            <input type="text" name="publishingHouse" class="form-control" id="inputPH3" placeholder="Publishing house">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputImage3" class="col-sm-2 col-form-label">Image URL</label>
+        <div class="col-sm-10">
+            <input type="text" name="image" class="form-control" id="inputImage3" placeholder="URL">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputCategory3" class="col-sm-2 col-form-label">Categories</label>
+        <div class="col-sm-10">
+            <c:forEach var="category" items="${categories}">
+                <h6>${category.name}</h6>
+                <input type="checkbox" name="categoryArray" class="form-control" id="inputCategory3"
+                       value="${category.name}">
             </c:forEach>
-        </tr>
-        <%--<div class="form-group row">--%>
-            <%--<div class="col-sm-2">Categories</div>--%>
-            <%--<div class="col-sm-10">--%>
-                <%--<div class="form-check">--%>
-                    <%--<input class="form-check-input" type="checkbox" id="gridCheck1">--%>
-                    <%--<label class="form-check-label" for="gridCheck1">--%>
-                        <%--Example checkbox--%>
-                    <%--</label>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Submit"></td>
-        </tr>
-    </table>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
+    </div>
 </form>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"

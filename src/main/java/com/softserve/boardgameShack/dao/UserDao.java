@@ -10,15 +10,15 @@ import java.util.List;
 
 public class UserDao implements GenericDao<User> {
 
-    private static final String GET_BY_NAME = "select * from users where name = ?";
-    private static final String GET_BY_EMAIL = "select * from users where email = ?";
-    private static final String GET_BY_ID = "select * from users where id = ?";
-    private static final String GET_ALL = "select * from users";
-    private static final String CREATE_USER = "insert into users (name, password, email, phone, user_role) " +
-            "values (?, ?, ?, ?, ?)";
-    private static final String UPDATE_USER = "update users set name = ?, password = ?, email = ?, " +
-            "phone = ?, user_role = ? where id = ?";
-    private static final String DELETE_USER = "delete from users where id = ?";
+    private static final String GET_BY_NAME = "SELECT * FROM users WHERE name = ?";
+    private static final String GET_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
+    private static final String GET_BY_ID = "SELECT * FROM users WHERE id = ?";
+    private static final String GET_ALL = "SELECT * FROM users";
+    private static final String CREATE_USER = "INSERT INTO users (name, password, email, phone, user_role) " +
+            "VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER = "UPDATE users SET name = ?, password = ?, email = ?, " +
+            "phone = ?, user_role = ? WHERE id = ?";
+    private static final String DELETE_USER = "DELETE FROM users WHERE id = ?";
     private static final Logger logger = Logger.getLogger(UserDao.class.getName());
 
     public List<User> getByName(final String name) {
@@ -42,7 +42,6 @@ public class UserDao implements GenericDao<User> {
     }
 
     public User getByEmail(final String email) {
-        User user = null;
         try (final Connection connection = ConnectionFactory.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_EMAIL)) {
 
@@ -50,21 +49,18 @@ public class UserDao implements GenericDao<User> {
             final ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                user = new User();
-                user = convertToUser(resultSet);
+                return convertToUser(resultSet);
             }
 
         } catch (final SQLException e) {
             logger.error("Issue with getting users from database");
             e.printStackTrace();
         }
-
-        return user;
+        return null;
     }
 
     @Override
     public User getById(final long id) {
-        User user = new User();
         try (final Connection connection = ConnectionFactory.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
 
@@ -72,14 +68,14 @@ public class UserDao implements GenericDao<User> {
             final ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
-            user = convertToUser(resultSet);
+            return convertToUser(resultSet);
 
         } catch (final SQLException e) {
             logger.error("Issue with getting user from database");
             e.printStackTrace();
         }
 
-        return user;
+        return null;
     }
 
     @Override
@@ -161,12 +157,12 @@ public class UserDao implements GenericDao<User> {
 
     private User convertToUser(final ResultSet resultSet) throws SQLException {
         final User user = new User();
-        user.setId(resultSet.getLong(1));
-        user.setName(resultSet.getString(2));
-        user.setPassword(resultSet.getString(3));
-        user.setEmail(resultSet.getString(4));
-        user.setPhone(resultSet.getString(5));
-        user.setUserRole(UserRole.valueOf(resultSet.getString(6)));
+        user.setId(resultSet.getLong("id"));
+        user.setName(resultSet.getString("name"));
+        user.setPassword(resultSet.getString("password"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPhone(resultSet.getString("phone"));
+        user.setUserRole(UserRole.valueOf(resultSet.getString("user_role")));
         return user;
     }
 }

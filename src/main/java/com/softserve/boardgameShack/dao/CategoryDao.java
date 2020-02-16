@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao implements GenericDao<Category> {
-    private static final String GET_BY_NAME = "select * from categories where name = ?";
-    private static final String GET_BY_NAME_WILDCARD = "select * from categories where name like ?";
-    private static final String GET_BY_ID = "select * from categories where id = ?";
-    private static final String GET_ALL = "select * from categories";
-    private static final String ADD_CATEGORY = "insert into categories (name, image) values (?, ?)";
-    private static final String UPDATE_CATEGORY = "update categories set name = ?, image = ? where id = ?";
-    private static final String DELETE_CATEGORY = "delete from categories where id = ?";
+    private static final String GET_BY_NAME = "SELECT * FROM categories WHERE name = ?";
+    private static final String GET_BY_NAME_WILDCARD = "SELECT * FROM categories WHERE name like ?";
+    private static final String GET_BY_ID = "SELECT * FROM categories WHERE id = ?";
+    private static final String GET_ALL = "SELECT * FROM categories";
+    private static final String ADD_CATEGORY = "INSERT INTO categories (name, image) values (?, ?)";
+    private static final String UPDATE_CATEGORY = "UPDATE categories SET name = ?, image = ? WHERE id = ?";
+    private static final String DELETE_CATEGORY = "DELETE FROM categories WHERE id = ?";
     private static final Logger logger = Logger.getLogger(CategoryDao.class.getName());
 
     public Category getByName(final String name) {
@@ -26,9 +26,9 @@ public class CategoryDao implements GenericDao<Category> {
 
             if (resultSet.next()) {
                 final Category category = new Category();
-                category.setId(resultSet.getLong(1));
-                category.setName(resultSet.getString(2));
-                category.setImage(resultSet.getString(3));
+                category.setId(resultSet.getLong("id"));
+                category.setName(resultSet.getString("name"));
+                category.setImage(resultSet.getString("image"));
                 return category;
             }
         } catch (final SQLException e) {
@@ -50,9 +50,9 @@ public class CategoryDao implements GenericDao<Category> {
 
             while (resultSet.next()) {
                 final Category category = new Category();
-                category.setId(resultSet.getLong(1));
-                category.setName(resultSet.getString(2));
-                category.setImage(resultSet.getString(3));
+                category.setId(resultSet.getLong("id"));
+                category.setName(resultSet.getString("name"));
+                category.setImage(resultSet.getString("image"));
                 categories.add(category);
             }
         } catch (final SQLException e) {
