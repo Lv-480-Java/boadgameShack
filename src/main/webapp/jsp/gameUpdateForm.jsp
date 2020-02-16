@@ -16,7 +16,7 @@
             <td><input type="text" value="${game.name}" name="name" required></td>
         </tr>
         <tr>
-            <td>Price:</td>
+            <td>Rent price:</td>
             <td><input type="number" value = "${game.price}" name="price" step="0.01" min = "0" required></td>
         </tr>
         <tr>

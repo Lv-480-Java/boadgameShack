@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="inputPrice3" class="col-sm-2 col-form-label">Loan price</label>
+        <label for="inputPrice3" class="col-sm-2 col-form-label">Rent price</label>
         <div class="col-sm-10">
             <input type="number" name="price" class="form-control" id="inputPrice3" placeholder="Price" required>
         </div>

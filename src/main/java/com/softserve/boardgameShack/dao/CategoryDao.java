@@ -12,12 +12,14 @@ public class CategoryDao implements GenericDao<Category> {
     private static final String GET_BY_NAME_WILDCARD = "SELECT * FROM categories WHERE name like ?";
     private static final String GET_BY_ID = "SELECT * FROM categories WHERE id = ?";
     private static final String GET_ALL = "SELECT * FROM categories";
+    private static final String GET_BY_GAME_ID = "SELECT c.id, c.name, c.image FROM categories c JOIN games_categories gc " +
+            "on c.id = gc.category_id WHERE gc.game_id = ?";
     private static final String ADD_CATEGORY = "INSERT INTO categories (name, image) values (?, ?)";
     private static final String UPDATE_CATEGORY = "UPDATE categories SET name = ?, image = ? WHERE id = ?";
     private static final String DELETE_CATEGORY = "DELETE FROM categories WHERE id = ?";
     private static final Logger logger = Logger.getLogger(CategoryDao.class.getName());
 
-    public Category getByName(final String name) {
+    public Category getCategoryByName(final String name) {
         try (final Connection connection = ConnectionFactory.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME)) {
 
@@ -39,7 +41,30 @@ public class CategoryDao implements GenericDao<Category> {
         return null;
     }
 
-    public List<Category> getByNameWildcard(final String name) {
+    public List<Category> getCategoriesForGame(final long gameId) {
+        final List<Category> categories = new ArrayList<>();
+        try (final Connection connection = ConnectionFactory.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_GAME_ID)) {
+
+            preparedStatement.setLong(1, gameId);
+            final ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                final Category category = new Category();
+                category.setId(resultSet.getLong("c.id"));
+                category.setName(resultSet.getString("c.name"));
+                category.setImage(resultSet.getString("c.image"));
+                categories.add(category);
+            }
+        } catch (final SQLException e) {
+            logger.error("Issue with getting category" +
+                    " from database");
+            e.printStackTrace();
+        }
+        return categories;
+    }
+
+    public List<Category> getCategoriesByNameWildcard(final String name) {
         final List<Category> categories = new ArrayList<>();
         try (final Connection connection = ConnectionFactory.getConnection();
              final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME_WILDCARD)) {

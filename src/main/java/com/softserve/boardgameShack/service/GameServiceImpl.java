@@ -1,5 +1,6 @@
 package com.softserve.boardgameShack.service;
 
+import com.softserve.boardgameShack.dao.CategoryDao;
 import com.softserve.boardgameShack.dao.GameDao;
 import com.softserve.boardgameShack.dao.PublishingHouseDao;
 import com.softserve.boardgameShack.entity.Category;
@@ -12,6 +13,7 @@ import java.util.List;
 public class GameServiceImpl implements GameService {
 
     private final GameDao gameDao = new GameDao();
+    private final CategoryDao categoryDao = new CategoryDao();
     private final PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
     private final CategoryService categoryService = new CategoryServiceImpl();
 
@@ -27,8 +29,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game getById(final long id) {
-
-        return gameDao.getById(id);
+        final Game game = gameDao.getById(id);
+        game.setCategories(categoryDao.getCategoriesForGame(game.getId()));
+        return game;
     }
 
     @Override

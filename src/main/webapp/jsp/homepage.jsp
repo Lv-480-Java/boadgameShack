@@ -13,7 +13,7 @@
 <div class="jumbotron">
     <h1 class="display-4">Welcome to our Boardgame Shack</h1>
     <p class="lead">The Boadrgame Shack Club is a unique place where you can spend your time with friends or family and play your favorite games in a cozy, casual atmosphere.</p>
-    <p class="lead">Or you can just take a game on loan.</p>
+    <p class="lead">Or you can just take a game for rent.</p>
     <p class="lead">
         <a class="btn btn-primary btn-lg" href="/aboutUs" role="button">More info</a>
     </p>

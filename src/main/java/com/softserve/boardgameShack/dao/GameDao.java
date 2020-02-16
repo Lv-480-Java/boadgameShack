@@ -36,14 +36,11 @@ public class GameDao implements GenericDao<Game> {
     private static final String UPDATE_GAME = "UPDATE games set name = ?, price = ?, time_to_play = ?, " +
             "player_number = ?, description = ?, language = ?, publishing_house_id = ?, image = ? WHERE id = ?";
     private static final String DELETE_GAME = "DELETE FROM games WHERE id = ?";
-    private static final String SET_CATEGORIES = "INSERT INTO games_categories (game_id, category_id) values (?, ?)";
+    private static final String SET_CATEGORIES = "INSERT INTO games_categories (game_id, category_id) VALUES (?, ?)";
     private static final String GET_CATEGORIES = "SELECT c.name FROM categories c JOIN games_categories gc " +
             "on c.id = gc.category_id WHERE gc.game_id = ?";
 
     private static final Logger logger = Logger.getLogger(GameDao.class.getName());
-    private final PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
-    private final CategoryDao categoryDao = new CategoryDao();
-
 
     @Override
     public Game getById(final long id) {
@@ -53,9 +50,7 @@ public class GameDao implements GenericDao<Game> {
             preparedStatement.setLong(1, id);
             final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                final Game game = convertToGame(resultSet);
-                setCategoriesToGame(connection, resultSet, game);
-                return game;
+                return convertToGame(resultSet);
             }
 
         } catch (final SQLException e) {
@@ -206,12 +201,12 @@ public class GameDao implements GenericDao<Game> {
         preparedStatement.setString(4, model.getPlayerNumber().isEmpty() ? null : model.getPlayerNumber());
         preparedStatement.setString(5, model.getDescription().isEmpty() ? null : model.getDescription());
         preparedStatement.setString(6, model.getLanguage().isEmpty() ? null : model.getLanguage());
+        preparedStatement.setString(8, model.getImage());
         if (model.getPublishingHouse() == null) {
             preparedStatement.setNull(7, Types.BIGINT);
         } else {
             preparedStatement.setLong(7, model.getPublishingHouse().getId());
         }
-        preparedStatement.setString(8, model.getImage());
     }
 
     private Game convertToGame(final ResultSet resultSet) throws SQLException {
@@ -231,19 +226,5 @@ public class GameDao implements GenericDao<Game> {
             game.setPublishingHouse(house);
         }
         return game;
-    }
-
-    private void setCategoriesToGame(final Connection connection, final ResultSet resultSet, final Game game) throws SQLException {
-        try (final PreparedStatement preparedStatement1 = connection.prepareStatement(GET_CATEGORIES)) {
-            preparedStatement1.setLong(1, game.getId());
-            final ResultSet resultSet1 = preparedStatement1.executeQuery();
-            final List<Category> categories = new ArrayList<>();
-            while (resultSet1.next()) {
-                categories.add(categoryDao.getByName(resultSet1.getString("name")));
-            }
-            if (!categories.isEmpty()) {
-                game.setCategories(categories);
-            }
-        }
     }
 }

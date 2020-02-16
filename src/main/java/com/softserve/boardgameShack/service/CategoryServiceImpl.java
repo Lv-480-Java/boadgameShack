@@ -16,12 +16,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getByName(final String name) {
-        return categoryDao.getByName(name);
+        return categoryDao.getCategoryByName(name);
     }
 
     @Override
     public List<Category> getByNameWildcard(final String name) {
-        return categoryDao.getByNameWildcard(name);
+        return categoryDao.getCategoriesByNameWildcard(name);
     }
 
     @Override

@@ -7,6 +7,7 @@
 </head>
 
 <body>
+<myTags:navPanel/>
     <h1>Wrong username or password</h1>
 </body>
 </html>
