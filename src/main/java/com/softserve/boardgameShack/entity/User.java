@@ -21,7 +21,7 @@ public class User {
     public User() {
     }
 
-    public User(String name, String password, String email, String phone) {
+    public User(final String name, final String password, final String email, final String phone) {
         this.name = name;
         this.password = password;
         this.email = email;
@@ -32,7 +32,7 @@ public class User {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -40,7 +40,7 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -48,7 +48,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -56,7 +56,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -64,7 +64,7 @@ public class User {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
@@ -72,7 +72,7 @@ public class User {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(final List<Order> orders) {
         this.orders = orders;
     }
 
@@ -80,7 +80,7 @@ public class User {
         return userRole;
     }
 
-    public void setUserRole(UserRole userRole) {
+    public void setUserRole(final UserRole userRole) {
         this.userRole = userRole;
     }
 

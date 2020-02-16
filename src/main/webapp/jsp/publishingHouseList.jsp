@@ -1,17 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib prefix="myTags" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<myTags:navPanel/>
+<myTags:gameSearch/>
 <head>
-    <title>Game list</title>
+    <title>PH List</title>
 </head>
-
 <body>
-<myTags:gamesTable/>
+<myTags:navPanel/>
+<h1>
+    PH List
+</h1>
+<ul class="list-group">
+    <c:forEach var="ph" items="${publishingHouses}">
+        <li class="list-group-item">
+            <a href="/publishingHouseView?name=${ph.name}">
+                    ${ph.name}
+            </a>
+        </li>
+    </c:forEach>
+</ul>
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
         crossorigin="anonymous"></script>

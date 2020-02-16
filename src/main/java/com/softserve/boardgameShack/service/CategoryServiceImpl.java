@@ -7,11 +7,21 @@ import java.util.List;
 
 public class CategoryServiceImpl implements CategoryService {
 
-    private CategoryDao categoryDao = new CategoryDao();
+    private final CategoryDao categoryDao = new CategoryDao();
 
     @Override
-    public Category getByName(String name) {
+    public Category getById(final long id) {
+        return categoryDao.getById(id);
+    }
+
+    @Override
+    public Category getByName(final String name) {
         return categoryDao.getByName(name);
+    }
+
+    @Override
+    public List<Category> getByNameWildcard(final String name) {
+        return categoryDao.getByNameWildcard(name);
     }
 
     @Override

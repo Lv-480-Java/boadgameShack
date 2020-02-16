@@ -1,6 +1,9 @@
 package com.softserve.boardgameShack.servlet;
 
+import com.softserve.boardgameShack.entity.Category;
 import com.softserve.boardgameShack.entity.Game;
+import com.softserve.boardgameShack.service.CategoryService;
+import com.softserve.boardgameShack.service.CategoryServiceImpl;
 import com.softserve.boardgameShack.service.GameService;
 import com.softserve.boardgameShack.service.GameServiceImpl;
 
@@ -13,15 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/gameSearch")
-public class GameSearchServlet extends HttpServlet {
+@WebServlet("/categoryView")
+public class GamesByCategoryServlet extends HttpServlet {
 
     private GameService gameService = new GameServiceImpl();
+    private CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Game> games;
-        games = gameService.getByNameWildcard(req.getParameter("name"));
+        Category category = categoryService.getByName(req.getParameter("name"));
+        List<Game> games = gameService.getByCategory(category);
 
         if (games.size() == 0) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/homepage.jsp");

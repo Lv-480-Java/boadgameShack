@@ -11,16 +11,16 @@ import java.io.IOException;
 public class UserAuthenticationFilter implements Filter {
 
     @Override
-    public void init(FilterConfig config) throws ServletException {
+    public void init(final FilterConfig config) throws ServletException {
         // If you have any <init-param> in web.xml, then you could getByName them
         // here by config.getInitParameter("name") and assign it as field.
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        HttpSession session = req.getSession(false);
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain chain) throws IOException, ServletException {
+        final HttpServletRequest req = (HttpServletRequest) servletRequest;
+        final HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        final HttpSession session = req.getSession(false);
 
         if (session != null && session.getAttribute("user") != null) {
             chain.doFilter(servletRequest, servletResponse);

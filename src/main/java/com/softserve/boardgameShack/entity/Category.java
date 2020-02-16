@@ -15,7 +15,7 @@ public class Category {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -23,7 +23,7 @@ public class Category {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -31,7 +31,7 @@ public class Category {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(final String image) {
         this.image = image;
     }
 

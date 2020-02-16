@@ -11,29 +11,34 @@ import java.util.List;
 
 public class GameServiceImpl implements GameService {
 
-    private GameDao gameDao = new GameDao();
-    private PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
-    private CategoryService categoryService = new CategoryServiceImpl();
+    private final GameDao gameDao = new GameDao();
+    private final PublishingHouseDao publishingHouseDao = new PublishingHouseDao();
+    private final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
-    public List<Game> getByName(String name) {
+    public List<Game> getByName(final String name) {
         return gameDao.getByName(name);
     }
 
     @Override
-    public List<Game> getByNameWildcard(String name) {
+    public List<Game> getByNameWildcard(final String name) {
         return gameDao.getByNameWildcard(name);
     }
 
     @Override
-    public Game getById(long id) {
+    public Game getById(final long id) {
 
         return gameDao.getById(id);
     }
 
     @Override
-    public List<Game> getByCategory(Category category) {
+    public List<Game> getByCategory(final Category category) {
         return gameDao.getByCategory(category);
+    }
+
+    @Override
+    public List<Game> getByPublishingHouse(final PublishingHouse publishingHouse) {
+        return gameDao.getByPublishingHouse(publishingHouse);
     }
 
     @Override
@@ -41,43 +46,44 @@ public class GameServiceImpl implements GameService {
         return gameDao.getAll();
     }
 
-    public void add(Game model, String houseName, List<String> categoryNames) {
+    @Override
+    public void add(final Game model, final String houseName, final List<String> categoryNames) {
         setCategoriesToGame(model, categoryNames);
         setPublishingHouseToGame(model, houseName);
         gameDao.add(model);
     }
 
     @Override
-    public void update(Game model, String houseName, List<String> categoryNames) {
+    public void update(final Game model, final String houseName, final List<String> categoryNames) {
         setCategoriesToGame(model, categoryNames);
         setPublishingHouseToGame(model, houseName);
         gameDao.update(model);
     }
 
     @Override
-    public void delete(Game model) {
+    public void delete(final Game model) {
         gameDao.delete(model);
     }
 
-    private void setPublishingHouseToGame(Game model, String houseName) {
+    private void setPublishingHouseToGame(final Game model, final String houseName) {
         if (houseName.equals("")) {
             return;
         }
-        List<PublishingHouse> publishingHouseList = publishingHouseDao.getByName(houseName);
+        final List<PublishingHouse> publishingHouseList = publishingHouseDao.getByName(houseName);
         if (publishingHouseList.size() != 0) {
             model.setPublishingHouse(publishingHouseList.get(0));
         } else {
-            PublishingHouse publishingHouse = new PublishingHouse();
+            final PublishingHouse publishingHouse = new PublishingHouse();
             publishingHouse.setName(houseName);
             publishingHouseDao.add(publishingHouse);
             model.setPublishingHouse(publishingHouseDao.getByName(houseName).get(0));
         }
     }
 
-    private void setCategoriesToGame(Game model, List<String> categoryNames) {
+    private void setCategoriesToGame(final Game model, final List<String> categoryNames) {
         if (categoryNames.size() != 0) {
-            List<Category> categories = new ArrayList<>();
-            for (String categoryName : categoryNames) {
+            final List<Category> categories = new ArrayList<>();
+            for (final String categoryName : categoryNames) {
                 categories.add(categoryService.getByName(categoryName));
             }
             model.setCategories(categories);

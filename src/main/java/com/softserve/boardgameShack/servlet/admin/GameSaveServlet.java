@@ -1,4 +1,4 @@
-package com.softserve.boardgameShack.servlet;
+package com.softserve.boardgameShack.servlet.admin;
 
 import com.softserve.boardgameShack.entity.Category;
 import com.softserve.boardgameShack.entity.Game;
@@ -20,20 +20,20 @@ import java.util.List;
 @WebServlet("/admin/gameSave")
 public class GameSaveServlet extends HttpServlet {
 
-    private GameService gameService = new GameServiceImpl();
-    private CategoryService categoryService = new CategoryServiceImpl();
+    private final GameService gameService = new GameServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Category> categories = categoryService.getAll();
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        final List<Category> categories = categoryService.getAll();
         req.setAttribute("categories", categories);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/gameSaveForm.jsp");
+        final RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/gameSaveForm.jsp");
         requestDispatcher.forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Game game = new Game();
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        final Game game = new Game();
         game.setName(req.getParameter("name"));
         game.setPrice(Double.valueOf(req.getParameter("price")));
         game.setTimeToPlay(req.getParameter("timeToPlay"));
@@ -41,9 +41,9 @@ public class GameSaveServlet extends HttpServlet {
         game.setDescription(req.getParameter("description"));
         game.setLanguage(req.getParameter("language"));
         game.setImage(req.getParameter("image"));
-        String publishingHouse = req.getParameter("publishingHouse");
-        String[] categoryArray = req.getParameterValues("categoryArray");
-        List<String> categoryNames = Arrays.asList(categoryArray);
+        final String publishingHouse = req.getParameter("publishingHouse");
+        final String[] categoryArray = req.getParameterValues("categoryArray");
+        final List<String> categoryNames = Arrays.asList(categoryArray);
 
         gameService.add(game, publishingHouse, categoryNames);
         resp.sendRedirect("/homepage");

@@ -1,4 +1,4 @@
-package com.softserve.boardgameShack.servlet;
+package com.softserve.boardgameShack.servlet.admin;
 
 import com.softserve.boardgameShack.entity.User;
 import com.softserve.boardgameShack.service.UserService;
@@ -16,14 +16,14 @@ import java.util.List;
 @WebServlet("/admin/userList")
 public class UserListServlet extends HttpServlet {
 
-    private UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> users;
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        final List<User> users;
         users = userService.getAll();
         req.setAttribute("users", users);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/userList.jsp");
+        final RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/userList.jsp");
         requestDispatcher.forward(req, resp);
     }
 }

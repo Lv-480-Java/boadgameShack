@@ -20,7 +20,11 @@
     <li class="list-group-item">Time to play: ${model.timeToPlay}</li>
     <li class="list-group-item">Number of players: ${model.playerNumber}</li>
     <li class="list-group-item">Language: ${model.language}</li>
-    <li class="list-group-item">Publishing house: ${model.publishingHouse.name}</li>
+    <li class="list-group-item">Publishing house:
+        <a href="/publishingHouseView?name=${model.publishingHouse.name}">
+            ${model.publishingHouse.name}
+        </a>
+    </li>
     <c:if test="${model.getCategories()} != null">
         <li class="list-group-item">
             Categories:

@@ -16,27 +16,27 @@ public class OrderDao implements GenericDao<Order> {
     private static final String GET_ALL = "select * from orders";
     private static final String ADD_ORDER = "insert into orders (datetime, order_details, game_id, user_id) " +
             "values (?, ?, ?, ?)";
-    private static Logger logger = Logger.getLogger(OrderDao.class.getName());
-    private static GameDao gameDao = new GameDao();
-    private static UserDao userDao = new UserDao();
+    private static final Logger logger = Logger.getLogger(OrderDao.class.getName());
+    private static final GameDao gameDao = new GameDao();
+    private static final UserDao userDao = new UserDao();
 //    private static final String UPDATE_ORDER = "update orders set datetime = ?, order_details = ?, game_id = ?, " +
 //            "user_id = ? where id = ?";
 //    private static final String DELETE_ORDER = "delete from orders where id = ?";
 
     @Override
-    public Order getById(long id) {
+    public Order getById(final long id) {
         Order order = null;
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
+        try (final Connection connection = ConnectionFactory.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)) {
 
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 order = convertToModel(resultSet);
 
             }
 
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             logger.error("Issue with getting order from database");
             e.printStackTrace();
         }
@@ -46,16 +46,16 @@ public class OrderDao implements GenericDao<Order> {
 
     @Override
     public List<Order> getAll() {
-        List<Order> orders = new ArrayList<>();
-        try (Connection connection = ConnectionFactory.getConnection();
-             Statement statement = connection.createStatement()) {
+        final List<Order> orders = new ArrayList<>();
+        try (final Connection connection = ConnectionFactory.getConnection();
+             final Statement statement = connection.createStatement()) {
 
-            ResultSet resultSet = statement.executeQuery(GET_ALL);
+            final ResultSet resultSet = statement.executeQuery(GET_ALL);
 
             while (resultSet.next()) {
                 orders.add(convertToModel(resultSet));
             }
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             logger.error("Issue with getting order from database");
             e.printStackTrace();
         }
@@ -63,19 +63,19 @@ public class OrderDao implements GenericDao<Order> {
     }
 
     @Override
-    public void add(Order model) {
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER)) {
+    public void add(final Order model) {
+        try (final Connection connection = ConnectionFactory.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDER)) {
             convertToStatement(model, preparedStatement);
 
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             logger.error("Issue with adding new order to database");
             e.printStackTrace();
         }
     }
 
     @Override
-    public void update(Order model) {
+    public void update(final Order model) {
 //        try (Connection connection = ConnectionFactory.getConnection();
 //             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ORDER)) {
 //
@@ -92,7 +92,7 @@ public class OrderDao implements GenericDao<Order> {
     }
 
     @Override
-    public void delete(Order model) {
+    public void delete(final Order model) {
 //        try (Connection connection = ConnectionFactory.getConnection();
 //             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER)){
 //
@@ -107,23 +107,23 @@ public class OrderDao implements GenericDao<Order> {
         throw new UnsupportedOperationException("Delete operation for order does not support");
     }
 
-    private Order convertToModel(ResultSet resultSet) throws SQLException {
-        Order order = new Order();
+    private Order convertToModel(final ResultSet resultSet) throws SQLException {
+        final Order order = new Order();
         order.setId(resultSet.getLong(1));
         order.setDateTime(resultSet.getObject(2, LocalDateTime.class));
         order.setOrderDetails(resultSet.getString(3));
-        Game game = gameDao.getById(resultSet.getLong(4));
+        final Game game = gameDao.getById(resultSet.getLong(4));
         if (game != null) {
             order.setGame(game);
         }
-        User user = userDao.getById(resultSet.getLong(5));
+        final User user = userDao.getById(resultSet.getLong(5));
         if (user != null) {
             order.setUser(user);
         }
         return order;
     }
 
-    private void convertToStatement(Order model, PreparedStatement preparedStatement) throws SQLException {
+    private void convertToStatement(final Order model, final PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setObject(1, model.getDateTime());
         preparedStatement.setString(2, model.getOrderDetails());
         preparedStatement.setLong(3, model.getGame().getId());

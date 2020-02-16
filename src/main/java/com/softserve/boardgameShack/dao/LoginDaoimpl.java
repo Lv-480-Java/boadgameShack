@@ -10,20 +10,20 @@ import java.sql.SQLException;
 public class LoginDaoimpl implements LoginDao {
 
     private static final String CHECK_LOGIN = "select * from users where name = ? and password = ?";
-    private static Logger logger = Logger.getLogger(LoginDaoimpl.class.getName());
+    private static final Logger logger = Logger.getLogger(LoginDaoimpl.class.getName());
 
     @Override
-    public boolean checkUserProperties(String name, String password) {
+    public boolean checkUserProperties(final String name, final String password) {
         boolean status = false;
-        try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
+        try (final Connection connection = ConnectionFactory.getConnection();
+             final PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = preparedStatement.executeQuery();
             status = resultSet.next();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             logger.error("Issue in username validation");
             e.printStackTrace();
         }

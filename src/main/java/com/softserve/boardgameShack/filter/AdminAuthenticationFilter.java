@@ -14,27 +14,23 @@ import java.io.IOException;
 public class AdminAuthenticationFilter implements Filter {
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(final FilterConfig filterConfig) throws ServletException {
 
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+    public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
+        final HttpServletRequest req = (HttpServletRequest) servletRequest;
+        final HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
+        final HttpSession session = req.getSession();
+        final User user = (User) session.getAttribute("user");
 
         if (user == null || !(user.getUserRole() == (UserRole.ADMIN))) {
             resp.sendRedirect("/loginForm");
-//        } else if(user.getUserRole() == (UserRole.ADMIN)) {
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
         }
-//        }else {
-//            resp.sendRedirect("/loginForm");
-//        }
     }
 
     @Override

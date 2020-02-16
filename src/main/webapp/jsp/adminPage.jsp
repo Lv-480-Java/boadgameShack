@@ -19,6 +19,7 @@
                 <a class="nav-link active" id="v-pills-games-tab" data-toggle="pill" href="#v-pills-games" role="tab" aria-controls="v-pills-games" aria-selected="true">Games</a>
                 <a class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" aria-controls="v-pills-users" aria-selected="false">Users</a>
                 <a class="nav-link" id="v-pills-categories-tab" data-toggle="pill" href="#v-pills-categories" role="tab" aria-controls="v-pills-categories" aria-selected="false">Categories</a>
+                <a class="nav-link" id="v-pills-publishing_houses-tab" data-toggle="pill" href="#v-pills-publishing_houses" role="tab" aria-controls="v-pills-publishing_houses" aria-selected="false">Publishing houses</a>
             </div>
         </div>
         <div class="col-9">
@@ -39,6 +40,10 @@
                 <div class="tab-pane fade" id="v-pills-categories" role="tabpanel" aria-labelledby="v-pills-categories-tab">
                     <a href="/admin/categorySave" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Add category</a>
                     <myTags:categoriesCards/>
+                </div>
+                <div class="tab-pane fade" id="v-pills-publishing_houses" role="tabpanel" aria-labelledby="v-pills-publishing_houses-tab">
+                    <a href="/admin/publishingHouseList" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">All PH</a>
+                    <a href="/admin/publishingHouseSave" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Add PH</a>
                 </div>
             </div>
         </div>

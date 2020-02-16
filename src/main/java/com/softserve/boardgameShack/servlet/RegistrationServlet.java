@@ -38,11 +38,11 @@ public class RegistrationServlet extends HttpServlet {
         try {
 
             userService.add(user, repeatPassword);
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/homepage.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/homepage.jsp");
             requestDispatcher.forward(req, resp);
         } catch (IllegalArgumentException e) {
             req.setAttribute("error-msg", e.getMessage());
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("jsp/registrationForm.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/registrationForm.jsp");
             requestDispatcher.forward(req, resp);
         }
     }

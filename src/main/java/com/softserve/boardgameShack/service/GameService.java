@@ -2,6 +2,7 @@ package com.softserve.boardgameShack.service;
 
 import com.softserve.boardgameShack.entity.Category;
 import com.softserve.boardgameShack.entity.Game;
+import com.softserve.boardgameShack.entity.PublishingHouse;
 
 import java.util.List;
 
@@ -14,6 +15,8 @@ public interface GameService {
     Game getById(long id);
 
     List<Game> getByCategory(Category category);
+
+    List<Game> getByPublishingHouse(PublishingHouse publishingHouse);
 
     List<Game> getAll();
 

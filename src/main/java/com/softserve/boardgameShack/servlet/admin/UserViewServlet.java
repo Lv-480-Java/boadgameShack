@@ -1,4 +1,4 @@
-package com.softserve.boardgameShack.servlet;
+package com.softserve.boardgameShack.servlet.admin;
 
 import com.softserve.boardgameShack.entity.User;
 import com.softserve.boardgameShack.service.UserService;
@@ -15,14 +15,14 @@ import java.io.IOException;
 @WebServlet("/admin/userView")
 public class UserViewServlet extends HttpServlet {
 
-    private UserService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.valueOf(req.getParameter("id"));
-        User view = userService.getById(id);
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
+        final long id = Long.valueOf(req.getParameter("id"));
+        final User view = userService.getById(id);
         req.setAttribute("model", view);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/userView.jsp");
+        final RequestDispatcher requestDispatcher = req.getRequestDispatcher("/jsp/userView.jsp");
         requestDispatcher.forward(req, resp);
     }
 }

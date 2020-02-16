@@ -31,7 +31,7 @@ public class Game {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -39,7 +39,7 @@ public class Game {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -47,7 +47,7 @@ public class Game {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(final double price) {
         this.price = price;
     }
 
@@ -55,7 +55,7 @@ public class Game {
         return timeToPlay;
     }
 
-    public void setTimeToPlay(String timeToPlay) {
+    public void setTimeToPlay(final String timeToPlay) {
         this.timeToPlay = timeToPlay;
     }
 
@@ -63,7 +63,7 @@ public class Game {
         return playerNumber;
     }
 
-    public void setPlayerNumber(String playerNumber) {
+    public void setPlayerNumber(final String playerNumber) {
         this.playerNumber = playerNumber;
     }
 
@@ -71,7 +71,7 @@ public class Game {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -79,7 +79,7 @@ public class Game {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(final String language) {
         this.language = language;
     }
 
@@ -87,7 +87,7 @@ public class Game {
         return publishingHouse;
     }
 
-    public void setPublishingHouse(PublishingHouse publishingHouse) {
+    public void setPublishingHouse(final PublishingHouse publishingHouse) {
         this.publishingHouse = publishingHouse;
     }
 
@@ -95,7 +95,7 @@ public class Game {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(final List<Category> categories) {
         this.categories = categories;
     }
 
@@ -103,7 +103,7 @@ public class Game {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(final String image) {
         this.image = image;
     }
 

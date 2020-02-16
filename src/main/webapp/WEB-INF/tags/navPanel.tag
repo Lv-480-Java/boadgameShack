@@ -39,7 +39,7 @@
                 </c:if>
             </li>
         </ul>
-        <form action="/gameSearch" method="get">
+        <form action="/search" method="get">
             <input type="text" name="name" placeholder="Search">
             <input type="submit" value="Search">
         </form>

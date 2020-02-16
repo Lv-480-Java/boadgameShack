@@ -21,7 +21,7 @@ public class Order {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -29,7 +29,7 @@ public class Order {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(final LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -37,7 +37,7 @@ public class Order {
         return orderDetails;
     }
 
-    public void setOrderDetails(String orderDetails) {
+    public void setOrderDetails(final String orderDetails) {
         this.orderDetails = orderDetails;
     }
 
@@ -45,7 +45,7 @@ public class Order {
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(final Game game) {
         this.game = game;
     }
 
@@ -53,7 +53,7 @@ public class Order {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 

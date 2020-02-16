@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface CategoryService {
 
-//    Category getById(long id);
+    Category getById(long id);
 
     Category getByName(String name);
+
+    List<Category> getByNameWildcard(String name);
 
     List<Category> getAll();
 }
